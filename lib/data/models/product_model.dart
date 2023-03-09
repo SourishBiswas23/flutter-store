@@ -6,6 +6,7 @@ class ProductModel {
     required this.category,
     required this.description,
     required this.imageUrl,
+    required this.rating,
   });
   final String id;
   final String title;
@@ -13,4 +14,5 @@ class ProductModel {
   final String category;
   final String description;
   final String imageUrl;
+  final String rating;
 }
