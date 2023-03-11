@@ -1,8 +1,12 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store/controllers/bloc/favourites_bloc.dart';
+import 'package:store/controllers/categories_bloc/categories_bloc.dart';
+import 'package:store/controllers/search_bloc/search_bloc.dart';
+import 'package:store/global_theme.dart';
 import 'package:store/routes.dart';
 import 'package:store/views/nav_bar/nav_bar.dart';
 import 'package:flutter/material.dart';
+
+import 'controllers/favourites_bloc/favourites_bloc.dart';
 
 void main(List<String> args) {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,16 +18,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => FavouritesBloc(),
-      child: MaterialApp(
-        home: const NavBar(),
-        theme: ThemeData.light().copyWith(
-          colorScheme: const ColorScheme.light().copyWith(
-            primary: Colors.deepOrange,
-            secondary: Colors.deepOrange,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<FavouritesBloc>(
+          create: (context) => FavouritesBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SearchBloc(),
+        ),
+        BlocProvider<CategoriesBloc>(
+          create: (context) => CategoriesBloc(
+            searchBloc: BlocProvider.of<SearchBloc>(context),
           ),
         ),
+      ],
+      child: MaterialApp(
+        home: const NavBar(),
+        theme: GlobalTheme().lightTheme,
         title: 'Store',
         onGenerateRoute: AppNavigator.onGenerateRoute,
         navigatorKey: AppNavigator.navigatorKey,

@@ -7,10 +7,10 @@ import '../../data/models/product_model.dart';
 class ProductRatingAndFavouritesIcon extends StatefulWidget {
   const ProductRatingAndFavouritesIcon({
     super.key,
-    required this.favouriteProduct,
+    required this.product,
   });
 
-  final ProductModel favouriteProduct;
+  final ProductModel product;
 
   @override
   State<ProductRatingAndFavouritesIcon> createState() =>
@@ -19,10 +19,10 @@ class ProductRatingAndFavouritesIcon extends StatefulWidget {
 
 class _ProductRatingAndFavouritesIconState
     extends State<ProductRatingAndFavouritesIcon> {
-  bool selected = true;
   @override
   Widget build(BuildContext context) {
     final favouriteBloc = context.read<FavouritesBloc>();
+    bool selected = favouriteBloc.state.favouriteList.contains(widget.product);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 5,
@@ -40,7 +40,7 @@ class _ProductRatingAndFavouritesIconState
               ),
               const SizedBox(width: 5),
               Text(
-                '(${widget.favouriteProduct.rating})',
+                '(${widget.product.rating})',
                 style: const TextStyle(
                   color: Colors.deepOrange,
                 ),
@@ -53,11 +53,11 @@ class _ProductRatingAndFavouritesIconState
               highlightColor: Colors.transparent,
               onPressed: () => setState(() {
                 if (selected) {
-                  favouriteBloc.add(
-                      RemoveFavouriteEvent(favourite: widget.favouriteProduct));
+                  favouriteBloc
+                      .add(RemoveFavouriteEvent(favourite: widget.product));
                 } else {
-                  favouriteBloc.add(
-                      AddFavouriteEvent(favourite: widget.favouriteProduct));
+                  favouriteBloc
+                      .add(AddFavouriteEvent(favourite: widget.product));
                 }
                 selected = !selected;
               }),

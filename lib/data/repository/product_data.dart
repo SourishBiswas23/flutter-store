@@ -1,22 +1,66 @@
+import 'package:dio/dio.dart';
+import 'package:store/data/models/error_model.dart';
+import 'package:store/data/providers/product.api.dart';
+
 import '../models/product_model.dart';
 
-Map<String, dynamic> json = {
-  "id": 1,
-  "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-  "price": 109.95,
-  "description":
-      "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-  "category": "men's clothing",
-  "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-  "rating": {"rate": 3.9, "count": 120}
-};
+class ProductData {
+  getProductListByCategory({required String category}) async {
+    try {
+      var response = await ProductApi().getRawProductsByCategory(
+        category: category,
+      );
+      if (response.statusCode == 200) {
+        List responseData = response.data;
+        List<Map<String, dynamic>> json = [];
+        for (var element in responseData) {
+          json.add(element);
+        }
+        List<ProductModel> productList = _mapRawDataToProductList(data: json);
+        if (productList.isEmpty) {
+          return ErrorModel(
+            errorMessage: "We could'nt find the product you were looking for",
+          );
+        }
+        return productList;
+      } else {
+        return ErrorModel(
+          errorMessage:
+              response.statusMessage ?? 'Check the product_data.dart file',
+        );
+      }
+    } catch (e) {
+      return ErrorModel(errorMessage: e.toString());
+    }
+  }
 
-final ProductModel productModel = ProductModel(
-  id: json['id'].toString(),
-  title: json["title"],
-  price: json["price"].toString(),
-  category: json["category"],
-  description: json['description'],
-  imageUrl: json['image'],
-  rating: json['rating']['rate'].toString(),
-);
+  getProductById({required String id}) async {
+    try {
+      var response = await ProductApi().getRawProductById(id: id);
+      if (response.statusCode == 200) {
+        if (response.data == null) {
+          return ErrorModel(
+            errorMessage: "We could'nt find the product you were looking for",
+          );
+        }
+        final ProductModel product = ProductModel.fromJson(json: response.data);
+        return product;
+      } else {
+        return ErrorModel(
+          errorMessage:
+              response.statusMessage ?? 'Check the product_data.dart file',
+        );
+      }
+    } catch (e) {
+      return ErrorModel(errorMessage: e.toString());
+    }
+  }
+
+  _mapRawDataToProductList({required List<Map<String, dynamic>> data}) {
+    List<ProductModel> products = [];
+    for (var element in data) {
+      products.add(ProductModel.fromJson(json: element));
+    }
+    return products;
+  }
+}

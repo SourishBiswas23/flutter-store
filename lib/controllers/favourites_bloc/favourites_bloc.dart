@@ -8,18 +8,13 @@ part 'favourites_state.dart';
 class FavouritesBloc extends Bloc<FavouritesEvent, FavouritesState> {
   FavouritesBloc() : super(const FavouritesState(favouriteList: [])) {
     on<AddFavouriteEvent>((event, emit) {
-      emit(
-        FavouritesState(
-          favouriteList: [...state.favouriteList, event.favourite],
-        ),
-      );
+      emit(FavouritesState(
+          favouriteList: [...state.favouriteList, event.favourite]));
     });
     on<RemoveFavouriteEvent>((event, emit) {
-      emit(
-        FavouritesState(favouriteList: [
-          ...state.favouriteList.where((element) => element != event.favourite)
-        ]),
-      );
+      emit(FavouritesState(favouriteList: [
+        ...state.favouriteList.where((element) => element != event.favourite)
+      ]));
     });
   }
 }

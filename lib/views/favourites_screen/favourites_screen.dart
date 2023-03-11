@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store/controllers/bloc/favourites_bloc.dart';
-import 'package:store/views/favourites_screen/no_favourites.dart';
 
+import '../../controllers/favourites_bloc/favourites_bloc.dart';
 import 'favourites_grid_builder.dart';
+import 'no_favourites.dart';
 
 class FavouritesScreen extends StatelessWidget {
   const FavouritesScreen({super.key});
