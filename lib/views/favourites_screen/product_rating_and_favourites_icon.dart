@@ -22,7 +22,7 @@ class _ProductRatingAndFavouritesIconState
   bool selected = true;
   @override
   Widget build(BuildContext context) {
-    final favouriteBloc = context.read<FavouritesBloc>();
+    final favouritesBloc = context.read<FavouritesBloc>();
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 5,
@@ -53,10 +53,10 @@ class _ProductRatingAndFavouritesIconState
               highlightColor: Colors.transparent,
               onPressed: () => setState(() {
                 if (selected) {
-                  favouriteBloc.add(
+                  favouritesBloc.add(
                       RemoveFavouriteEvent(favourite: widget.favouriteProduct));
                 } else {
-                  favouriteBloc.add(
+                  favouritesBloc.add(
                       AddFavouriteEvent(favourite: widget.favouriteProduct));
                 }
                 selected = !selected;

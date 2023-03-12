@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/controllers/categories_bloc/categories_bloc.dart';
+import 'package:store/controllers/product_detail_bloc/product_detail_bloc.dart';
 import 'package:store/controllers/search_bloc/search_bloc.dart';
 import 'package:store/global_theme.dart';
 import 'package:store/routes.dart';
@@ -31,6 +32,9 @@ class MyApp extends StatelessWidget {
             searchBloc: BlocProvider.of<SearchBloc>(context),
           ),
         ),
+        BlocProvider<ProductDetailBloc>(
+          create: (context) => ProductDetailBloc(),
+        )
       ],
       child: MaterialApp(
         home: const NavBar(),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/controllers/product_detail_bloc/product_detail_bloc.dart';
 
 import '../../data/models/product_model.dart';
 import 'product_image.dart';
@@ -11,26 +13,34 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 0,
-            blurRadius: 0,
-            offset: const Offset(4, 5),
-          ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ProductImage(favouriteProduct: favouriteProduct),
-          ProductTitleAndPrice(favouriteProduct: favouriteProduct),
-          ProductRatingAndFavouritesIcon(favouriteProduct: favouriteProduct),
-        ],
+    final ProductDetailBloc productDetailBloc =
+        BlocProvider.of<ProductDetailBloc>(context);
+
+    return GestureDetector(
+      onTap: () => productDetailBloc.add(LoadProductEvent(
+        product: favouriteProduct,
+      )),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.1),
+              spreadRadius: 0,
+              blurRadius: 0,
+              offset: const Offset(4, 5),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ProductImage(favouriteProduct: favouriteProduct),
+            ProductTitleAndPrice(favouriteProduct: favouriteProduct),
+            ProductRatingAndFavouritesIcon(favouriteProduct: favouriteProduct),
+          ],
+        ),
       ),
     );
   }

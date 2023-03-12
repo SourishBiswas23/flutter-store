@@ -79,7 +79,7 @@ class AppNavigator {
     return navigatorKey.currentState?.pushReplacementNamed(_Paths.of(route));
   }
 
-  void pop() {
+  static pop() {
     navigatorKey.currentState?.pop();
   }
 }
