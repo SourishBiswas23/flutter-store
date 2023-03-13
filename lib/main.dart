@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/controllers/cart_bloc/cart_bloc.dart';
 import 'package:store/controllers/categories_bloc/categories_bloc.dart';
 import 'package:store/controllers/product_detail_bloc/product_detail_bloc.dart';
 import 'package:store/controllers/search_bloc/search_bloc.dart';
@@ -34,7 +35,10 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ProductDetailBloc>(
           create: (context) => ProductDetailBloc(),
-        )
+        ),
+        BlocProvider<CartBloc>(
+          create: (context) => CartBloc(),
+        ),
       ],
       child: MaterialApp(
         home: const NavBar(),

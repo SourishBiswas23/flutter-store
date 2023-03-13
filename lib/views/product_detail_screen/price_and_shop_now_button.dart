@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/controllers/cart_bloc/cart_bloc.dart';
 
 import '../../data/models/product_model.dart';
 
@@ -12,6 +14,8 @@ class PriceAndShopNowButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Row(
@@ -36,7 +40,20 @@ class PriceAndShopNowButton extends StatelessWidget {
                   ),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () {
+                cartBloc.add(AddProductToCartEvent(product: product));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: const Text('Added Product to cart'),
+                    action: SnackBarAction(
+                      label: 'Dismiss',
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                      },
+                    ),
+                  ),
+                );
+              },
               child: const Center(
                 child: Text(
                   'Shop Now',

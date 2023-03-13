@@ -40,6 +40,12 @@ class _SearchFieldState extends State<SearchField> {
     if (error != null) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(error),
+        action: SnackBarAction(
+          label: 'Dismiss',
+          onPressed: () {
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          },
+        ),
       ));
     } else {
       searchBloc.add(SearchByIdEvent(id: value));
