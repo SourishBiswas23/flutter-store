@@ -11,17 +11,21 @@ class Auth {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount!.authentication;
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication =
+            await googleSignInAccount.authentication;
 
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken,
+        );
 
-      final UserCredential userCredential =
-          await _firebaseAuth.signInWithCredential(credential);
-      final User? user = userCredential.user;
+        final UserCredential userCredential =
+            await _firebaseAuth.signInWithCredential(credential);
+        final User? user = userCredential.user;
+      } else {
+        throw 'No Account Selected';
+      }
     } catch (e) {
       rethrow;
     }

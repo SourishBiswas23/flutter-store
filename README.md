@@ -1,16 +1,25 @@
 # store
 
-A new Flutter project.
+This is an ecommerce application built using Flutter and Firebase. It uses the 'fakestore' api to get the products and their details.
 
-## Getting Started
+# Screenshots
 
-This project is a starting point for a Flutter application.
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/1.jpeg)
 
-A few resources to get you started if this is your first Flutter project:
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/2.jpeg)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/3.jpeg)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/4.jpeg)
+
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/5.jpeg)
+
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/6.jpeg)
+
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/7.jpeg)
+
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/8.jpeg)
+
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/9.jpeg)
+
+![Screenshots are present in the 'Screenshots' directory of the project](./screenshots/10.jpeg)

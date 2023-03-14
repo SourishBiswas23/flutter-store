@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:store/auth/auth.dart';
 import 'package:store/routes.dart';
 
@@ -10,14 +11,19 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, UserState> {
   AuthBloc() : super(NoUser()) {
     on<GoogleSignInEvent>((event, emit) async {
-      await _auth.signInWithGoogle();
-      final User? currentUser = await _auth.getCurrentUser();
-      if (currentUser != null) {
-        emit(UserLoggedIn(user: currentUser));
-        while (AppNavigator.navigatorKey.currentState!.canPop()) {
-          await AppNavigator.pop();
+      try {
+        await _auth.signInWithGoogle();
+        final User? currentUser = await _auth.getCurrentUser();
+        if (currentUser != null) {
+          emit(UserLoggedIn(user: currentUser));
+          while (AppNavigator.navigatorKey.currentState!.canPop()) {
+            await AppNavigator.pop();
+          }
+          await AppNavigator.pushReplace(route: Routes.navBar);
         }
-        await AppNavigator.pushReplace(route: Routes.navBar);
+      } catch (e) {
+        AppNavigator.scaffoldKey.currentState
+            ?.showSnackBar(SnackBar(content: Text(e.toString())));
       }
     });
     on<SignOutEvent>(
