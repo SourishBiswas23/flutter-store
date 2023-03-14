@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store/utils/app_actions.dart';
 import 'package:store/views/cart_screen/empty_cart.dart';
 
 import '../../controllers/cart_bloc/cart_bloc.dart';
@@ -15,6 +16,7 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('My Cart'),
         centerTitle: true,
+        actions: const [AppActions()],
       ),
       body: BlocBuilder<CartBloc, CartState>(
         builder: (context, state) {

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store/controllers/payment_bloc/payment_bloc.dart';
+import 'package:store/routes.dart';
+import 'package:store/views/loading_screen/loading_screen.dart';
 
 import '../../controllers/cart_bloc/cart_bloc.dart';
 
-class SumTotalAndCheckoutButton extends StatelessWidget {
-  const SumTotalAndCheckoutButton({
-    super.key,
-  });
+class PaymentButtonAndTotal extends StatelessWidget {
+  const PaymentButtonAndTotal({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CartBloc cartBloc = BlocProvider.of<CartBloc>(context);
     return BlocBuilder<CartBloc, CartState>(
       builder: (context, state) {
         final sumTotal =
             state.cartItems.keys.fold<double>(0, (previousValue, element) {
           return previousValue + double.parse(element.price);
         });
-
-        final PaymentBloc paymentBloc = BlocProvider.of<PaymentBloc>(context);
 
         if (state.cartItems.isEmpty) {
           return const SizedBox();
@@ -62,7 +60,14 @@ class SumTotalAndCheckoutButton extends StatelessWidget {
                   ],
                 ),
                 GestureDetector(
-                  onTap: () => paymentBloc.add(LoadPaymentScreenEvent()),
+                  onTap: () async {
+                    cartBloc.add(ClearCart());
+                    AppNavigator.pushReplace(route: Routes.loadingScreen);
+                    await Future.delayed(const Duration(seconds: 2));
+                    AppNavigator.pushReplace(
+                      route: Routes.orderPlacedScreen,
+                    );
+                  },
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     width: double.infinity,
@@ -72,7 +77,7 @@ class SumTotalAndCheckoutButton extends StatelessWidget {
                     ),
                     child: const Center(
                       child: Text(
-                        'Checkout',
+                        'Make Payment',
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -88,5 +93,6 @@ class SumTotalAndCheckoutButton extends StatelessWidget {
         }
       },
     );
+    ;
   }
 }

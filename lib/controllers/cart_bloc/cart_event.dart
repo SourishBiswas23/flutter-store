@@ -28,3 +28,5 @@ class DecreaseCountEvent extends CartEvent {
   @override
   final ProductModel product;
 }
+
+class ClearCart extends CartEvent {}

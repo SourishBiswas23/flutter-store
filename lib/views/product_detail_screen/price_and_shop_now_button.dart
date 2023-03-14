@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/controllers/cart_bloc/cart_bloc.dart';
+import 'package:store/routes.dart';
 
 import '../../data/models/product_model.dart';
 
@@ -42,13 +43,14 @@ class PriceAndShopNowButton extends StatelessWidget {
               ),
               onPressed: () {
                 cartBloc.add(AddProductToCartEvent(product: product));
-                ScaffoldMessenger.of(context).showSnackBar(
+                AppNavigator.scaffoldKey.currentState!.showSnackBar(
                   SnackBar(
                     content: const Text('Added Product to cart'),
                     action: SnackBarAction(
                       label: 'Dismiss',
                       onPressed: () {
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        AppNavigator.scaffoldKey.currentState!
+                            .hideCurrentSnackBar();
                       },
                     ),
                   ),

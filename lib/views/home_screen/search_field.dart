@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store/controllers/search_bloc/search_bloc.dart';
+import 'package:store/routes.dart';
 
 class SearchField extends StatefulWidget {
   const SearchField({super.key});
@@ -38,12 +39,12 @@ class _SearchFieldState extends State<SearchField> {
       {required String value, required SearchBloc searchBloc}) {
     String? error = _validateInput(value);
     if (error != null) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      AppNavigator.scaffoldKey.currentState!.showSnackBar(SnackBar(
         content: Text(error),
         action: SnackBarAction(
           label: 'Dismiss',
           onPressed: () {
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            AppNavigator.scaffoldKey.currentState?.removeCurrentSnackBar();
           },
         ),
       ));

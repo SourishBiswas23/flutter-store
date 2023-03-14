@@ -29,5 +29,10 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       items.remove(event.product);
       emit(CartState(cartItems: items));
     });
+    on<ClearCart>(
+      (event, emit) {
+        emit(const CartState(cartItems: {}));
+      },
+    );
   }
 }

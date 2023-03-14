@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class GlobalTheme {
   final ThemeData lightTheme = ThemeData.light().copyWith(
+    iconTheme: const IconThemeData(color: Colors.black),
     appBarTheme: const AppBarTheme().copyWith(
       backgroundColor: Colors.white,
       elevation: 0,
